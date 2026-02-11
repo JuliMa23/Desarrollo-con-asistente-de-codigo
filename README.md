@@ -1,107 +1,189 @@
-# Gestión de Contactos
+# Contact Management System
 
-Proyecto de ejemplo pensado para aprender programación orientada a objetos (POO) y testing con `pytest`.
+A clean and scalable contact management application built with Python, demonstrating solid software engineering principles through a Model-View-Controller (MVC) architecture and comprehensive test coverage.
 
-## Quickstart (PowerShell)
+## Overview
 
+This project implements a contact management system with CRUD operations, showcasing object-oriented programming principles, separation of concerns, and maintainable code structure. The application uses JSON-based persistence and follows industry-standard architectural patterns.
+
+## Key Features
+
+- **Complete CRUD Operations**: Create, read, update, and delete contacts with ease
+- **MVC Architecture**: Clean separation between models, services, and controllers
+- **Data Persistence**: JSON-based storage with automatic file handling
+- **Extensible Design**: Service layer abstraction enables easy database migration
+- **Test Coverage**: Pytest framework integration for unit and integration testing
+- **Type Hints**: Enhanced code readability and IDE support with Python type annotations
+
+## Tech Stack
+
+- **Language**: Python 3.x
+- **Testing Framework**: pytest 7.0+
+- **Data Storage**: JSON (file-based persistence)
+- **Architecture Pattern**: MVC (Model-View-Controller)
+- **Development Practices**: Object-Oriented Programming, SOLID principles
+
+## Project Structure
+
+```
+.
+├── src/
+│   ├── main.py                          # Application entry point
+│   ├── models/
+│   │   └── contacto.py                  # Contact entity with serialization
+│   ├── services/
+│   │   └── contacto_service.py          # Business logic and data access layer
+│   ├── controllers/
+│   │   └── contacto_controller.py       # Request handling and orchestration
+│   └── data/
+│       └── contactos.json               # JSON data storage
+├── tests/
+│   ├── test_contacto.py                 # Unit tests for Contact model
+│   └── test_contacto_controller.py      # Integration tests for controller
+├── requirements.txt                      # Python dependencies
+├── pytest.ini                           # Pytest configuration
+└── README.md                            # Project documentation
+```
+
+## Installation and Setup
+
+### Prerequisites
+
+- Python 3.7 or higher
+- pip (Python package manager)
+
+### Installation Steps
+
+1. Clone the repository:
+```bash
+git clone https://github.com/JuliMa23/Desarrollo-con-asistente-de-codigo.git
+cd Desarrollo-con-asistente-de-codigo
+```
+
+2. Create and activate a virtual environment:
+
+**On macOS/Linux:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+**On Windows (PowerShell):**
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-pytest -q
 ```
 
-## Arquitectura y organización
-
-Este proyecto está organizado de forma simple y escalable para una pequeña aplicación de gestión de contactos:
-
-- `models/` - Clases del dominio (p. ej. `contacto.py` con la entidad `Contacto`).
-- `controllers/` - Capas de orquestación o adaptadores que exponen operaciones (crear, listar, etc.).
-- `services/` - Lógica de negocio y acceso simple a datos (en este scaffold se persiste en JSON).
-- `data/` - Ficheros de datos (por ejemplo `contactos.json`).
-
-## Arquitectura (árbol)
-
-La estructura del proyecto se organiza de forma clara para separar responsabilidades. A continuación tienes la visualización en árbol exactamente como está creada:
-
-```
-Modulo_2/
-├── README.md
-# Desarrollo con asistente de código
-
-Proyecto educativo en Python para gestionar contactos. Está pensado como scaffold para practicar Programación Orientada a Objetos (POO), pruebas con `pytest` y trabajo guiado con asistentes de código.
-
-**Repositorio remoto:** https://github.com/JuliMa23/Desarrollo-con-asistente-de-codigo
-
-## Descripción
-
-Ejemplo didáctico que separa responsabilidades en `models`, `services` y `controllers`, y utiliza un fichero JSON para persistencia en fase de prototipo.
-
-## Quickstart (PowerShell)
-
-```powershell
-# Crear entorno virtual
+**On Windows (Command Prompt):**
+```cmd
 python -m venv .venv
+.venv\Scripts\activate.bat
+```
 
-# Activar (PowerShell)
-.\.venv\Scripts\Activate.ps1
-
-# Instalar dependencias
+3. Install dependencies:
+```bash
 pip install --upgrade pip
 pip install -r requirements.txt
+```
 
-# Ejecutar tests
-pytest -q
+## How to Run the Project
 
-# Ejecutar la aplicación (entrypoint mínimo)
+### Running the Application
+
+Execute the main application:
+```bash
 python -m src.main
 ```
 
-Si borras la carpeta `.venv` en tu máquina, recrea el entorno con los pasos anteriores. Antes de borrarla, exporta dependencias:
+### Running Tests
 
-```powershell
-pip freeze > requirements.txt
+Run the test suite:
+```bash
+pytest -q
 ```
 
-## Estructura del proyecto
-
-- `README.md` — documentación y comandos básicos.
-- `requirements.txt` — dependencias (por ejemplo `pytest`).
-- `pytest.ini` — configuración de `pytest`.
-- `src/` — código fuente:
-  - `main.py` — punto de entrada (launcher/CLI).
-  - `models/contacto.py` — entidad `Contacto` con serialización.
-  - `services/contacto_service.py` — lógica y persistencia (JSON adapter en este scaffold).
-  - `controllers/contacto_controller.py` — orquestador / adaptador de entrada.
-  - `data/contactos.json` — almacenamiento JSON de ejemplo.
-- `tests/` — pruebas con `pytest`.
-
-## Comandos útiles
-
-- Ver estado Git y remotos:
-```powershell
-git remote -v
-git log --oneline -n 5
-git status
+For verbose output with detailed test information:
+```bash
+pytest -v
 ```
 
-## Testing
+For test coverage report:
+```bash
+pytest --cov=src tests/
+```
 
-- Ejecuta `pytest -q` para correr la suite.
-- Usa `tmp_path` en tests que necesiten filesystem temporal.
+## Usage Example
 
-## Buenas prácticas y recomendaciones
+The application provides a service layer for managing contacts programmatically:
 
-- No subas la carpeta `.venv` al repositorio; ya está en `.gitignore`.
-- Mantén `requirements.txt` actualizado con `pip freeze` para poder recrear entornos reproducibles.
-- Abstrae la persistencia detrás de una interfaz `Repository` cuando quieras cambiar JSON por una base de datos.
+```python
+from src.services.contacto_service import ContactoService
+from src.models.contacto import Contacto
 
-## Próximos pasos que puedo implementar
+# Initialize the service with a data file
+service = ContactoService('src/data/contactos.json')
 
-- Añadir una interfaz `Repository` y un adaptador JSON.
-- Añadir validaciones y excepciones en `models` y `services`.
-- Crear un workflow de GitHub Actions que ejecute `pytest` en cada push.
+# Create a new contact
+new_contact = Contacto(
+    id='1',
+    nombre='John Doe',
+    telefono='+1234567890',
+    correo='john.doe@example.com'
+)
+
+# Add contact to the system
+service.agregar_contacto(new_contact.to_dict())
+
+# Retrieve all contacts
+contacts = service.cargar_contactos()
+
+# Get a specific contact
+contact = service.obtener_contacto('1')
+
+# Delete a contact
+service.eliminar_contacto('1')
+```
+
+## Architecture Highlights
+
+### Model Layer
+The `Contacto` class encapsulates contact data with serialization methods (`to_dict`, `from_dict`) for easy persistence and retrieval.
+
+### Service Layer
+`ContactoService` implements the business logic and handles data persistence, abstracting storage implementation details from the rest of the application.
+
+### Controller Layer
+`ContactoController` orchestrates user interactions and delegates operations to the service layer, following the single responsibility principle.
+
+## Development Best Practices
+
+- **Virtual Environment**: All dependencies are isolated in a virtual environment
+- **Type Hints**: Functions include type annotations for better code documentation
+- **Error Handling**: Defensive programming with proper exception handling
+- **Clean Code**: Follows PEP 8 style guidelines for Python code
+- **Modular Design**: Clear separation of concerns enables easy testing and maintenance
+
+## Future Improvements
+
+- Implement a Repository pattern interface to enable multiple storage backends (PostgreSQL, MongoDB, SQLite)
+- Add input validation and custom exception handling for improved error messaging
+- Develop a command-line interface (CLI) with argparse or Click for better user interaction
+- Integrate a web framework (Flask/FastAPI) to provide RESTful API endpoints
+- Add comprehensive integration tests with fixtures and mocking
+- Implement logging functionality for debugging and monitoring
+- Add data validation using Pydantic models
+- Create a CI/CD pipeline with GitHub Actions for automated testing and deployment
+- Add database migrations support using Alembic
+- Implement authentication and authorization for multi-user support
+
+## Contributing
+
+Contributions are welcome. Please ensure that all tests pass before submitting a pull request.
+
+## License
+
+This project is available for educational and portfolio purposes.
 
 ---
 
-Si quieres que agregue un `LICENSE` (MIT) o ejemplos de uso más detallados, dímelo y lo añado.
+**Note**: This project was developed as a demonstration of software engineering fundamentals and is suitable for inclusion in a technical portfolio.
